@@ -1,4 +1,3 @@
-# trainVue
 #SPA 与前后端分离（密不可分）
 ##SAP
 > 在使用期间不会重新加载页面，页面局部刷新，用户体验好；路由、业务逻辑前端控制。
@@ -76,20 +75,23 @@
 > 
 > 在对象定义的过程中，通过get 得到订阅者的依赖列表，通过set 发布消息从而订阅者获得消息
 	
+	
 	var data = {}		//可理解为组件中的data
-	data.name = "Peiduo"	//组件中的一个属性
-	var myValue = data.name + " Du";	//更新该属性的
+	var name = "Peiduo"	//组件中的一个属性
 	var key = "name"
+	
 	Object.defineProperty(data, key, {
     	get:function (){
-	        setDepsList()	//设置 V 和 M 中使用该属性的地方（订阅者订阅）
-	        return myValue
+	        setDepsList()  //设置 V 和 M 中使用该属性的地方（订阅者订阅）
+	        return name
     	},
     	set:function (value){
-	        tellDepsListToUpdate()    // 告诉要更新的 V 和 M （发布者发布）
-	        myValue = value
+	        tellDepsListToUpdate(value)  // 告诉要更新的V 和M （发布者发布）
+	        name = value
     	}
 	});
+	
+	data.name += " Du";	//更新该属性的
 
 ##常用API解读与一些最佳实践
 > - Vue 生命周期（keep-alive）
@@ -111,7 +113,7 @@
 > - Split the dependency tree into chunks loaded on demand（把依赖树分割成块按需加载）
 - Keep initial loading time low
 - Every static asset should be able to be a module 
-- Ability to integrate 3rd-party libraries as modules （整合CommonsChunkPlugin）
+- Ability to integrate 3rd-party libraries as modules （整合）
 - Ability to customize nearly every part of the module bundler （定制）
 - Suited for big projects 
 
