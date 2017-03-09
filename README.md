@@ -4,7 +4,7 @@
 ###SAP
 > 在使用期间不会重新加载页面，页面局部刷新，用户体验好；路由、业务逻辑前端控制。
 
-*缺点：* 初次加载耗时多，SEO（Search Engine Optimization）难度较高
+*缺点：* 初次加载耗时多，SEO（Search Engine Optimization）难度较高（Prerender.io）
 
 ###前后端分离
 > 前端负责界面显示，后端负责吞吐数据和计算，业务逻辑前端实现，减轻服务器压力。修改需求时大多不影响后端。
@@ -45,7 +45,7 @@
 > 2. 前端框架（Vue "2.1.0"）：详见下节
 > 3. [脚手架（vue-cli）](https://github.com/vuejs/vue-cli)：简化手动配置安装过程
 > 4. [打包工具（webpack "1.13.2"）](http://webpack.github.io/docs/configuration.html)：提高工作效率，配置更透明，插件使用、管理更方便统一
-> 5. 高级语言（Less、 ES6）：代码抽象程度高，更优美易读 ->更易于维护
+> 5. 高级语言（Less、 ES6）：代码抽象程度高，更优美易读，更易于维护
 > 6. 安装
 
 安装 nodejs & npm
@@ -73,7 +73,7 @@
 > - 订阅发布模式
 > - 响应式数据流
 
-####订阅发布模式之解读 Object.defineProperty
+####订阅发布模式之解读 Object.defineProperty（类似每个对象的构造函数）
 > - 订阅发布模式：订阅者订阅信息，然后发布者发布信息通知订阅者更新。
 > - 在对象定义的过程中，通过get 得到订阅者的依赖列表，通过set 发布消息从而订阅者获得更新通知
 	
@@ -84,11 +84,13 @@
 	
 	Object.defineProperty(data, key, {
     	get:function (){
-	        setDepsList()  //订阅者订阅（设置 V 和 M 中使用该属性的地方）
+	        setDepsList()  
+	        //订阅者订阅（设置 V 和 M 中使用该属性的地方）
 	        return name
     	},
     	set:function (value){
-	        tellDepsListToUpdate(value)  //发布者发布（告知要更新的V 和M）
+	        tellDepsListToUpdate(value)  
+	        //发布者发布（告知要更新的V 和M ）
 	        name = value
     	}
 	});
@@ -125,19 +127,17 @@
 ```javascript
 dataName="dpd"  // dpd 就是一个字符串，不是变量
 ```
-如果传输Boolean 或者 Number 类型
+区别于字符串的其它对象类型
 ```javascript
 :dataBool="true"  // 带冒号则双引号内表示为表达式
 :dataNumber="10"
 :dataArray="arrList" // arrList 为自定义数组（来自data 或者 props 中）
 ```
-v-model 绑定form 标签元素value属性（登录页面）
-
 
 #### 组件定义的方式
 1. 构成组件，项目中应用最多的 (props down,  events up)
 2. 全局组件，应用：通用组件
-3. 在标签内使用组件
+3. 在特定结构标签内使用组件
 
 ```vbscript-html
 <table>
@@ -167,17 +167,26 @@ vueBus.$on('id-selected', function (id) {
 ####slot 分发内容
 
 ####如何使用子组件内的方法
-> 当我们想要在父组件使用子组件内的方法时可以通过 refs 实现
+> 当我们想要在父组件使用子组件内的方法时可以通过 子组件索引ref 实现
 
-*通常情况不需要使用子组件内的方法，通过改变属性即可*
+*通常情况不需要使用子组件内的方法，通过改变其属性即可，避免在模版或计算属性中使用*
 
 ####覆盖elementUI 样式需要注意添加命名空间
 
-####v-else 内部使用循环的时候，v-else 有bug
-可以使用如下方式替换
-v-if="useA"
-v-if="!useA"
+####v-else 内部使用循环的时候，v-else 有逻辑上的问题，for 优先级比较高
 
+    for (item in list) {
+	  else {
+	    // create <tr> element.
+	  }
+	}
+
+1. 可以使用如下方式替换
+	
+	v-if="useA"
+	v-if="!useA"
+
+2. 外部用 template 包裹
 
 ##[webpack](http://webpack.github.io/docs/)
 *webpack is a module bundler.*--模块打包机*
@@ -236,7 +245,7 @@ Loaders把其它语言转换为它认识的javascript
 > - 管理方式 svn + gulp （ES6 -> ES5）
 > - 使用:更新svn 进入项目目录执行如下命令即可（nodejs 脚本）
 
-node initlink.js <大于等于三个参数［通用组件所在路径, 项目跟路径, component^version component1^version］>
+	node initlink.js <componentPath> <programPath> <component^version> <component1^version>
 
 ```bash
  node initlink.js /Users/dupeiduo/Desktop/Program/VueComponents/tags  /Users/dupeiduo/Desktop/Program/OSS/truck/vue-webpack  agrisz-map^1.0.0 agrisz-echart^1.0.0 agrisz-dialog^1.0.0 agrisz-button^1.0.0 agrisz-searchpoi^1.0.0
@@ -244,12 +253,12 @@ node initlink.js <大于等于三个参数［通用组件所在路径, 项目跟
 
 ##设计与思考
 ####内存缓存机制（项目实例）
-
+我们可以也有必要在任何统一入口处做一些事情
 ####以数据为导向
 1. 做一个页面先想清楚它所需要的**数据** （立马开始动手是**大忌**）
 2. 理清宏观的整体页面结构 
 
-> *页面就像个手机，它的“变量”就是手机的按键，先清楚要有哪些按键才能玩转这个手机*
+> *页面就像个机器，它的“变量”就是控制机器运行的操纵器，先清楚要有哪些操纵器*
 
 ####代码要有顺序，有逻辑关系（努力方向）
 按照加载的顺序、操作的顺序（人们容易理解的顺序）
@@ -258,7 +267,7 @@ node initlink.js <大于等于三个参数［通用组件所在路径, 项目跟
 ####[自顶向下](http://baike.baidu.com/link?url=idtDSUDzLuXUuKewE3L0nmZo-cBEabf5wtKWV3ZAtlsA_axKhDRf079JEUKdbd5IN0fKJ6DPCK3IuiV8-IVDHEzv69G9-pqNIiNl64QJYyglNNd9Hmf19ACgO-6X7dUd) （分析问题的一种思维方式）
 **思想就是分解问题，问题分解后，单看每个小问题，就非常简单了（不够简单那是分的不够细）。**
 
-> 反映到代码中每个小问题就是一个方法，每个方法只做一件事。当分的足够细的时候，代码抽象也就做好了
+> 反映到代码中每个小问题就是一个**方法**，每个**方法**只做一件事。当分的足够细的时候，代码抽象也就做好了
 
 #####应用
 1. 工作流
@@ -266,8 +275,14 @@ node initlink.js <大于等于三个参数［通用组件所在路径, 项目跟
 - 搭建整体页面结构（父组件结构，由多个子组件组成）
 - 设计子组件内部数据属性，回调事件
 - 模拟页面操作逻辑，mock数据
-- 把有困难的或者可以分工的部分分配出去，从而达到最大限度分工协作
+- 完善方法和样式，调试接口
+
+**把有困难的或者可以分工的部分分配出去，从而达到最大限度分工协作**
 
 2. 搭建项目架构可以用相同的思想
+
+#### 建议
+> 对自己的代码有强烈的控制欲
+> 对自己写的代码有信心 
 
 ##讨论与补充
