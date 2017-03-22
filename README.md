@@ -1,4 +1,7 @@
 ##Vue 使用总结和交流
+
+@[Vue]
+
 [toc]
 ##SPA 与前后端分离（密不可分）
 ###SAP
@@ -43,13 +46,14 @@
 
 > 1. 环境依赖（nodejs">= 4.0.0", npm">= 3.0.0"）
 > 2. 前端框架（Vue "2.1.0"）：详见下节
-> 3. [脚手架（vue-cli）](https://github.com/vuejs/vue-cli)：简化手动配置安装过程
+> 3. [脚手架（vue-cli "2.5.1"）](https://github.com/vuejs/vue-cli)：简化手动配置安装过程
 > 4. [打包工具（webpack "1.13.2"）](http://webpack.github.io/docs/configuration.html)：提高工作效率，配置更透明，插件使用、管理更方便统一
 > 5. 高级语言（Less、 ES6）：代码抽象程度高，更优美易读，更易于维护
-> 6. 安装
+> 6. 安装(配置国内代理 **npm config set registry http://registry.cnpmjs.org**)
 
 安装 nodejs & npm
 ```bash
+	npm config set registry http://registry.cnpmjs.org
 	npm install -g vue-cli
 	vue init webpack <my-project-name>
 	npm install
@@ -65,7 +69,7 @@
 
 ###Vue 是什么？能做什么？
 
-> Vue 是典型MVVM框架，拥有双向绑定的能力与完整的组件化方案，利用 virtual Dom 极大提高了性能。
+> Vue 是典型MVVM框架，拥有双向绑定的能力与完整的组件化方案，利用 virtual Dom 提供了函数式的 UI 编程方式，*可以后端渲染*。
 
 **你不必做任何事就获得完全优化的重渲染。**
 
@@ -188,7 +192,9 @@ vueBus.$on('id-selected', function (id) {
 
 2. 外部用 template 包裹
 
-##[webpack](http://webpack.github.io/docs/)
+##[webpack1.0 API](http://webpack.github.io/docs/)  
+[webpack2.0 概念](https://webpack.js.org/concepts/)
+[中文](http://www.css88.com/doc/webpack2/concepts/entry-points/)
 *webpack is a module bundler.*--模块打包机*
 
 ###webpack 能做
@@ -218,12 +224,39 @@ vueBus.$on('id-selected', function (id) {
 
 *Loaders are special modules webpack uses to ‘load’ other modules (written in another language) into JavaScript (that webpack understands).*
 
-Loaders把其它语言转换为它认识的javascript
+**Loaders in webpack transform these files into modules as they are added to your dependency graph.**
+
+webpack 只认识javascript ，它把其他文件看作是模块，加到依赖树中
 
 ###Plugins(插件)
 *To do some additional processing of the bundle in your workflow.*
 
 额外的包整合，压缩、混淆等...
+
+##package
+[权威：包的作用与使用方式](https://www.npmjs.com/package/package)
+
+###package 中版本前的符号~和^
+```bash
+	# npm@2.6.1 or later
+	npm update <package name>
+	
+	npm update 
+	# 更新所有package 到tags 中最新版本,包括全局包、本地包、依赖
+	
+	"dependencies": {
+	  "dep1": "^1.1.1"  #可更新小于最大版本号的版本
+	}
+	
+	"dependencies": {
+	  "dep1": "~1.1.1"  #可更新最小版本号
+	}
+	npm update --save
+	# 更新 dependencies中包，package.json 会被修改（只写了这里）
+	npm update -g
+	# 更新全局包
+```
+
 
 ##项目架构
 - 入口（main.js -> index.html -> router -> app.vue -> router-> pages）
@@ -284,5 +317,10 @@ Loaders把其它语言转换为它认识的javascript
 #### 建议
 > 对自己的代码有强烈的控制欲
 > 对自己写的代码有信心 
+> 对性能有极致需求的特殊情况，其实应该牺牲一些可维护性采取手动优化
+
+####了解
+[WebAssembly](http://www.ithome.com.tw/news/96924)
+[Github](https://github.com/WebAssembly/design)
 
 ##讨论与补充
