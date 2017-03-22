@@ -1,6 +1,7 @@
-
 ##Vue 使用总结和交流
 
+
+[toc]
 ##SPA 与前后端分离（密不可分）
 ###SAP
 > 在使用期间不会重新加载页面，页面局部刷新，用户体验好；路由、业务逻辑前端控制。
@@ -51,11 +52,11 @@
 
 安装 nodejs & npm
 ```bash
-	npm config set registry http://registry.cnpmjs.org
-	npm install -g vue-cli
-	vue init webpack <my-project-name>
-	npm install
-	npm run dev
+  npm config set registry http://registry.cnpmjs.org
+  npm install -g vue-cli
+  vue init webpack <my-project-name>
+  npm install
+  npm run dev
 ```
 
 ##[Vue](https://cn.vuejs.org/v2/guide/)
@@ -78,26 +79,26 @@
 ####订阅发布模式之解读 Object.defineProperty（类似每个对象的构造函数）
 > - 订阅发布模式：订阅者订阅信息，然后发布者发布信息通知订阅者更新。
 > - 在对象定义的过程中，通过get 得到订阅者的依赖列表，通过set 发布消息从而订阅者获得更新通知
-	
+  
 ```javascript
-	var data = {}		//可理解为组件中的data
-	var name = "Peiduo"	//组件中的一个属性
-	var key = "name"
-	
-	Object.defineProperty(data, key, {
-    	get:function (){
-	        setDepsList()  
-	        //订阅者订阅（设置 V 和 M 中使用该属性的地方）
-	        return name
-    	},
-    	set:function (value){
-	        tellDepsListToUpdate(value)  
-	        //发布者发布（告知要更新的V 和M ）
-	        name = value
-    	}
-	});
-	
-	data.name += " Du";	//更新该属性
+  var data = {}   //可理解为组件中的data
+  var name = "Peiduo" //组件中的一个属性
+  var key = "name"
+  
+  Object.defineProperty(data, key, {
+      get:function (){
+          setDepsList()  
+          //订阅者订阅（设置 V 和 M 中使用该属性的地方）
+          return name
+      },
+      set:function (value){
+          tellDepsListToUpdate(value)  
+          //发布者发布（告知要更新的V 和M ）
+          name = value
+      }
+  });
+  
+  data.name += " Du"; //更新该属性
 ```
 ###常用API解读与一些最佳实践
 #### Vue 生命周期（keep-alive 保留组件状态或避免重新渲染，将页面缓存到内存中）
@@ -178,15 +179,15 @@ vueBus.$on('id-selected', function (id) {
 ####v-else 内部使用循环的时候，v-else 有逻辑上的问题，for 优先级比较高
 
     for (item in list) {
-	  else {
-	    // create <tr> element.
-	  }
-	}
+    else {
+      // create <tr> element.
+    }
+  }
 
 1. 可以使用如下方式替换
-	
-	v-if="useA"
-	v-if="!useA"
+  
+  v-if="useA"
+  v-if="!useA"
 
 2. 外部用 template 包裹
 
@@ -206,12 +207,12 @@ vueBus.$on('id-selected', function (id) {
 ###基本组成  
 
 ```javascript
-	module.exports = {
-     	entry: './src/app.js',
-    	output: {
-         	path: './bin',
-         	filename: 'app.bundle.js'
-     	}
+  module.exports = {
+      entry: './src/app.js',
+      output: {
+          path: './bin',
+          filename: 'app.bundle.js'
+      }
      }
       //没有特殊要求、特殊文件,以上代码可以完成模块打包的功能
 ```
@@ -236,23 +237,23 @@ webpack 只认识javascript ，它把其他文件看作是模块，加到依赖�
 
 ###package 中版本前的符号~和^
 ```bash
-	# npm@2.6.1 or later
-	npm update <package name>
-	
-	npm update 
-	# 更新所有package 到tags 中最新版本,包括全局包、本地包、依赖
-	
-	"dependencies": {
-	  "dep1": "^1.1.1"  #可更新小于最大版本号的版本
-	}
-	
-	"dependencies": {
-	  "dep1": "~1.1.1"  #可更新最小版本号
-	}
-	npm update --save
-	# 更新 dependencies中包，package.json 会被修改（只写了这里）
-	npm update -g
-	# 更新全局包
+  # npm@2.6.1 or later
+  npm update <package name>
+  
+  npm update 
+  # 更新所有package 到tags 中最新版本,包括全局包、本地包、依赖
+  
+  "dependencies": {
+    "dep1": "^1.1.1"  #可更新小于最大版本号的版本
+  }
+  
+  "dependencies": {
+    "dep1": "~1.1.1"  #可更新最小版本号
+  }
+  npm update --save
+  # 更新 dependencies中包，package.json 会被修改（只写了这里）
+  npm update -g
+  # 更新全局包
 ```
 
 
@@ -276,7 +277,7 @@ webpack 只认识javascript ，它把其他文件看作是模块，加到依赖�
 > - 管理方式 svn + gulp （ES6 -> ES5）
 > - 使用:更新svn 进入项目目录执行如下命令即可（nodejs 脚本）
 
-	node initlink.js <componentPath> <programPath> <component^version> <component1^version>
+  node initlink.js <componentPath> <programPath> <component^version> <component1^version>
 
 ```bash
  node initlink.js /Users/dupeiduo/Desktop/Program/VueComponents/tags  /Users/dupeiduo/Desktop/Program/OSS/truck/vue-webpack  agrisz-map^1.0.0 agrisz-echart^1.0.0 agrisz-dialog^1.0.0 agrisz-button^1.0.0 agrisz-searchpoi^1.0.0
