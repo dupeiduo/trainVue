@@ -64,12 +64,12 @@
 
 ## 使用vue-cli 部署环境
 
-  > 环境依赖（nodejs”>= 4.0.0”, npm”>= 3.0.0”）
-  > [脚手架（vue-cli “2.5.1”）](https://github.com/vuejs/vue-cli)：简化手动配置安装过程
-  > [打包工具（webpack “1.13.2”）](http://webpack.github.io/docs/configuration.html)：打包、编译工具
-  > 前端框架（Vue “2.1.0”）：详解见下节
-  > 高级语言（Less、 ES6）：代码抽象程度高，更优美易读，更易于维护
-  > 安装
+  - 环境依赖（nodejs”>= 4.0.0”, npm”>= 3.0.0”）
+  - [脚手架（vue-cli “2.5.1”）](https://github.com/vuejs/vue-cli)：简化手动配置安装过程
+  - [打包工具（webpack “1.13.2”）](http://webpack.github.io/docs/configuration.html)：打包、编译工具
+  - 前端框架（Vue “2.1.0”）：详解见下节
+  - 高级语言（Less、 ES6）：代码抽象程度高，更优美易读，更易于维护
+  - 安装
 
 #### 安装 nodejs & npm
     
